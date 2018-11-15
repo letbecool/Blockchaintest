@@ -1,0 +1,35 @@
+Setup geth and bootnode.
+
+boot.key is generated using "bootnode -genkey boot.key"
+
+Run nodesetup.sh bash script. This will setup 3 nodes.
+
+Expose port for node1 (30311):
+rpc : 8501
+
+for node2 (30312):
+rpc : 8502
+
+for node3 (30313):
+rpc : 8503
+
+
+Deploying smart contract using truffle:
+Truffle v4.1.14 (core: 4.1.14)
+Solidity v0.4.24 (solc-js)
+
+sudo npm install -g truffle 
+sudo npm install -g solc
+mkdir truffle 
+cd truffle
+truffle init
+
+Steps:
+./setupnodes
+deploy contract 
+changes contract address in app and time 
+run node app.js 
+
+
+
+
