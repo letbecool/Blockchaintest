@@ -149,8 +149,8 @@ web3.eth.extend({
 	  call: 'txpool_status'
 	}]
   });
-  
-
+ /* 
+// subscribe to event when new block is created
 web3.eth.subscribe('newBlockHeaders', (error, block) => {
         if(!error) {
     web3.eth.getBlock(block.number).then(function(value){
@@ -164,10 +164,19 @@ web3.eth.subscribe('newBlockHeaders', (error, block) => {
         } else {
             console.log('Error:', error);          
         }
-    });
+});*/
 
-
-
+// pending transaction every 1 second
+setInterval(function(){
+	web3.eth.getBlockNumber().then(function(block){
+		web3.eth.getBlock(block).then(function(value){
+			web3.eth.txpool.status().then(function(result){
+			utils.saveInputToCsv(`${value.number}, ${value.timestamp} ,${value.gasUsed},${value.size},${value.transactions.length}, ${parseInt(result.pending)} , ${value.difficulty}, ${value.totalDifficulty},${parseInt(result.queued)}`, d.getDay()+'_'+tps+'.csv');
+		})
+	})
+	})
+	
+},1000)
 
 
 var doStuff1 = function (d2) {
@@ -177,10 +186,7 @@ if(Date.now()<d2) {
     let iid = utils.genRandomStr(8)
     let plid = utils.genRandomStr(8)
     let uid = i
-
-
     //contractInstance.getID(i, iid, plid,{gas:32000})
-
 	contractInstance.methods
 	.getID(i, iid, plid)
 	.send({
@@ -212,19 +218,3 @@ var time= d2.setMinutes(d1.getMinutes() + 10);
 
 console.log(time)
 var x=setInterval(doStuff1,tps,time);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

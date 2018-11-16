@@ -1,3 +1,15 @@
+pre-requisite:
+go
+geth (ln -s $PATH/build/bin/geth /usr/local/bin)
+bootnode (ln -s $PATH/build/bin/bootnoode /usr/local/bin)
+truffle 
+solc
+nodejs
+npm
+
+
+
+
 Setup geth and bootnode.
 
 boot.key is generated using "bootnode -genkey boot.key"
