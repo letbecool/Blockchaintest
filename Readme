@@ -6,6 +6,9 @@ truffle
 solc
 nodejs
 npm
+jq
+
+sudo apt install jq (for parsing json object in bash)
 
 
 
