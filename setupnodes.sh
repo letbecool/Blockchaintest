@@ -27,6 +27,7 @@ do
    cp keystore/${array[$i-1]} $dataDir$i/keystore
    fi
 
+   #parsing address from keystore json file 
    address=$(cat keystore/${array[$i-1]} | jq '.address')
 
    #running nodes
