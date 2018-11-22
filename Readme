@@ -7,6 +7,7 @@ solc
 nodejs
 npm
 jq
+sudo apt install sleuthkit
 
 sudo apt install jq (for parsing json object in bash)
 
@@ -44,6 +45,13 @@ Steps:
 deploy contract 
 changes contract address in app and time 
 run node app.js 
+
+
+0x 78b25d90d0c6b2c6da588ab8621d32c93ab7510c
+0x 142612093efca0f055d10476493ca9a63b6e436c
+0x 2e4414a44c0e24c06190c0136390bd541fc34b5a
+0x e9b80b78d7bfc194dbe6b4db0c0f1d53e9838da0
+0x d34d4b8ccf12f6f0766fa896dbfc4d838532e908
 
 
 

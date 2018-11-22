@@ -18,4 +18,52 @@ hello=($(ls keystore))
 echo ${hello[2]}
 
 file=($(cat keystore/${hello[1]}))
-echo $file
+
+
+
+IFS=$'\r\n' GLOBIGNORE='*' command eval  'enodes=($(cat enode.txt))'
+echo "copying to nodes"
+echo ${enodes[0]}
+
+
+echo "success"
+
+
+
+function static-file() {
+    if [ $# == 2 ]
+    then 
+    echo "[" > $1
+    echo ${enodes[$2]} >> $1
+    echo "]" >> $1
+    elif [ $# == 3 ]
+    then
+    echo "[" > $1
+    echo -n ${enodes[$2]} >> $1
+    echo "," >> $1
+    echo ${enodes[$3]} >> $1  
+    echo "]" >> $1
+    elif [ $# == 4 ] 
+    then 
+    echo "[" > $1
+    echo -n ${enodes[$2]} >> $1
+    echo "," >> $1
+    echo -n ${enodes[$3]} >> $1    
+    echo "," >> $1
+    echo ${enodes[$4]} >> $1
+    echo "]" >> $1
+    else
+    echo "something went wrong"
+    fi   
+}
+
+
+dataDir=nodes/node
+
+echo $dataDir"1"
+echo $dataDir"2"
+echo $dataDir"3"
+echo $dataDir"4"
+echo $dataDir"5"
+
+static-file nodes/node2/static-nodes.json 4
