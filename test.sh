@@ -66,4 +66,17 @@ echo $dataDir"3"
 echo $dataDir"4"
 echo $dataDir"5"
 
+
+#printing date 
 static-file nodes/node2/static-nodes.json 4
+i=1
+echo $i$(date)
+
+#checking if directory exit and assiging to variable
+b=$(ls nodese)
+if [ $b == null ]
+then
+echo "nullllll"
+fi
+
+

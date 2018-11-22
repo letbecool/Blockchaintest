@@ -4,7 +4,7 @@ fs = require('fs')
 
 // set the provider you want from Web3.providers
 var net = require('net')
-var web3 = new Web3('/home/bikeshrestha/awesomeProject/Blockchaintest/nodes/node3/geth.ipc', net);
+var web3 = new Web3('/home/bikeshrestha/awesomeProject/Blockchaintest/nodes/node2/geth.ipc', net);
 
 
 console.log("connected to local network")
@@ -102,10 +102,10 @@ const abi = [
 		"type": "function"
 	}
 ]
-const contractAddress =  '0xfc9c485f0ba3ea7b69beb9fc1c444057cd16114b';
+const contractAddress =  '0x0864c263423928ffe47560e1daa3d5fa9490447d';
 const contractInstance = new web3.eth.Contract(abi,contractAddress);
 
-const tps = 100;
+const tps = 5;
 
 /*
 contractInstance.LogOfCauidGen().watch((error, result) => {
@@ -157,7 +157,7 @@ web3.eth.subscribe('newBlockHeaders', (error, block) => {
 	web3.eth.txpool.status().then(function(result){
  	console.log(result.pending);
 	console.log(value.size)
-	utils.saveInputToCsv(`${value.number}, ${value.timestamp} ,${value.gasUsed},${value.size},${value.transactions.length}, ${parseInt(result.pending)} , ${value.difficulty}, ${value.totalDifficulty},${parseInt(result.queued)}`, d.getDay()+'_'+tps+'.csv');
+	utils.saveInputToCsv(`${value.number}, ${value.timestamp} ,${value.gasUsed},${value.size},${value.transactions.length}, ${parseInt(result.pending)} , ${value.difficulty}, ${value.totalDifficulty},${parseInt(result.queued)}`, d+'_'+tps+'.csv');
 })
 }).catch(console.error)
 
@@ -165,19 +165,19 @@ web3.eth.subscribe('newBlockHeaders', (error, block) => {
             console.log('Error:', error);          
         }
 });
-/*
+
 // pending transaction every 1 second
 setInterval(function(){
 	web3.eth.getBlockNumber().then(function(block){
 		web3.eth.getBlock(block).then(function(value){
 			web3.eth.txpool.status().then(function(result){
-			utils.saveInputToCsv(`${value.number}, ${value.timestamp} ,${value.gasUsed},${value.size},${value.transactions.length}, ${parseInt(result.pending)} , ${value.difficulty}, ${value.totalDifficulty},${parseInt(result.queued)}`, d.getDay()+'_'+tps+'.csv');
+			utils.saveInputToCsv(`${value.number}, ${value.timestamp} ,${value.gasUsed},${value.size},${value.transactions.length}, ${parseInt(result.pending)} , ${value.difficulty}, ${value.totalDifficulty},${parseInt(result.queued)}`, d+'_'+'every1sec'+tps+'.csv');
 		})
 	})
 	})
 	
 },1000)
-*/
+
 
 var doStuff1 = function (d2) {
 
@@ -190,12 +190,12 @@ if(Date.now()<d2) {
 	contractInstance.methods
 	.getID(i, iid, plid)
 	.send({
-		from: '0x2e4414a44c0e24c06190c0136390bd541fc34b5a',
+		from: '0x142612093efca0f055d10476493ca9a63b6e436c',
 		gas: 50000,
 		gasPrice: 100000000000
 	},function (error, value) {
 		if(!error){
-			utils.saveInputToCsv(`${i} ,${plid} ,${iid} ,${utils.getCurentDateTime()}`, d.getDay()+'_'+'web3input'+'_'+tps+'.csv');
+			utils.saveInputToCsv(`${i} ,${plid} ,${iid} ,${utils.getCurentDateTime()}`, d+'_'+'web3input'+'_'+tps+'.csv');
 		} 
 	}).catch(console.log)
     console.log(i)
@@ -217,4 +217,4 @@ var time= d2.setMinutes(d1.getMinutes() + 10);
 
 
 console.log(time)
-//var x=setInterval(doStuff1,tps,time);
+var x=setInterval(doStuff1,tps,time);
