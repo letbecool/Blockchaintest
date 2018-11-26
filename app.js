@@ -9,6 +9,9 @@ var web3 = new Web3('/home/bikeshrestha/awesomeProject/Blockchaintest/nodes/node
 
 console.log("connected to local network")
 
+const args = process.argv.slice(2)
+
+
 
 /*
 fs.writeFile(`${__dirname}/outputs/web3input.csv`, '' , err => {
@@ -102,11 +105,20 @@ const abi = [
 		"type": "function"
 	}
 ]
-const contractAddress =  '0x0864c263423928ffe47560e1daa3d5fa9490447d';
+var contractAddress, tps;
+if(args[1] != undefined){
+	contractAddress = args[1].toString();
+}else{
+ 	contractAddress = '0x0864c263423928ffe47560e1daa3d5fa9490447d';
+}
+
+if(args[0] != undefined){
+	tps = parseInt(args[0]);
+}else{
+	tps = 10;
+}
+
 const contractInstance = new web3.eth.Contract(abi,contractAddress);
-
-const tps = 5;
-
 /*
 contractInstance.LogOfCauidGen().watch((error, result) => {
 
@@ -157,7 +169,7 @@ web3.eth.subscribe('newBlockHeaders', (error, block) => {
 	web3.eth.txpool.status().then(function(result){
  	console.log(result.pending);
 	console.log(value.size)
-	utils.saveInputToCsv(`${value.number}, ${value.timestamp} ,${value.gasUsed},${value.size},${value.transactions.length}, ${parseInt(result.pending)} , ${value.difficulty}, ${value.totalDifficulty},${parseInt(result.queued)}`, d+'_'+tps+'.csv');
+	utils.saveInputToCsv(`${value.number}, ${value.timestamp} ,${value.gasUsed},${value.size},${value.transactions.length}, ${parseInt(result.pending)} , ${value.difficulty}, ${value.totalDifficulty}`, d+'_'+tps+'.csv');
 })
 }).catch(console.error)
 
@@ -166,7 +178,9 @@ web3.eth.subscribe('newBlockHeaders', (error, block) => {
         }
 });
 
+
 // pending transaction every 1 second
+
 setInterval(function(){
 	web3.eth.getBlockNumber().then(function(block){
 		web3.eth.getBlock(block).then(function(value){
@@ -217,4 +231,4 @@ var time= d2.setMinutes(d1.getMinutes() + 10);
 
 
 console.log(time)
-var x=setInterval(doStuff1,tps,time);
+var x=setInterval(doStuff1,1000/tps,time);
