@@ -19,6 +19,9 @@ if(args[0] != undefined) {
 }
 console.log("successful", b)
 
+for(var b = 0; b<100; b++){
+    
+}
    
 /*
 web3.eth.filter("pending").watch(

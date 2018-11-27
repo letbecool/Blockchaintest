@@ -162,6 +162,8 @@ web3.eth.extend({
 	}]
   });
  
+var b = 0;
+
 // subscribe to event when new block is created
 web3.eth.subscribe('newBlockHeaders', (error, block) => {
         if(!error) {
@@ -170,6 +172,12 @@ web3.eth.subscribe('newBlockHeaders', (error, block) => {
  	console.log(result.pending);
 	console.log(value.size)
 	utils.saveInputToCsv(`${value.number}, ${value.timestamp} ,${value.gasUsed},${value.size},${value.transactions.length}, ${parseInt(result.pending)} , ${value.difficulty}, ${value.totalDifficulty}`, d+'_'+tps+'.csv');
+	
+	if(b==100){
+		process.exit(1)
+	}
+	b++
+	
 })
 }).catch(console.error)
 
@@ -227,7 +235,7 @@ console.log("Completed.......Completed........Completed")
 
 var d1 = new Date ();
 var d2 = new Date ( d1 );
-var time= d2.setMinutes(d1.getMinutes() + 10);
+var time= d2.setMinutes(d1.getMinutes() + 30);
 
 
 console.log(time)
