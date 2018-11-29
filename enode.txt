@@ -1,5 +1,8 @@
-"enode://307bdf957a3ee8db7a45c4dfd1b2cb1378e9006c86c5f3962a5ff94fff6c97f7dad4f1151c454fae88c4124878a9d72d3d3c799c9c217a5f107fb28547fbf928@[::]:30311"
-"enode://549d50dc87ed18d170c5079da0ef9edd177636652f3ac142e67eb7b30e9bb64aebbd8695456b75188790672e3ab386e284003826697d723ca8497838df42b1ab@[::]:30312"
-"enode://b40931a4a857dd4220d3cd504dee89333f9e12500c5b78c3612e14a63efee81f6879122ff96ff6917fecfc900a888a3afd254366d96065e7a25f5a3f09136d70@[::]:30313"
-"enode://05905a7fbaa6ec9cf8917ffe3616efa4ce3ed5e56e322615f7f4f5b309de88b6490f76ea5661fa83dd0f8120acd2d274946990089b9530be6a75dbfebedeb1e7@[::]:30314"
-"enode://0381f32a4b7549a513f893f5508f7bf9f66ac1cf89483c5706019b14b66504b2efe178369b528423ca34dde8a5c062f7e8693f2da0684304fcc9f5e3235f9a1b@[::]:30315"
+"enode://59c096e805e48578f953505ded434a913e823d30438a6d2b1a111895f6a69e0c8d75cb351ffc85d83278e8b4eba195a8ec0e26ea2832fe96c0be24c4aa1acc33@[::]:30311"
+"enode://808d3ffd23e7b4ab67e1eace822d145a04a9015df3c260b8ad5ec6da08aea6779f03ad531e6604e53605f209985b4c16c5aec95aa99290e3dc17c118f2f47aec@[::]:30312"
+"enode://6350b002029902177ab373100ef029c2dd648aff094336c58d554bd9b3476a9403e6c33ad0695ab04c50e6f9a975981bd28b7529b0ce7f55201286e1f2331570@[::]:30313"
+"enode://8c6940a2cd0a033fd84604eb307ac06cff90e8b93ba764a74af33b41cba0b712f70f5435c005c19af06cdfee80b42866a553109e36baffd641f660a44e1ba5c7@[::]:30314"
+"enode://2fd73db89ec6fa2fa349feb4e7aab1ed21a713bd5133d84871ed248a65094437e6656151551e95b78a69fd0405fd445ef2afe60e89dfac62e2d8678037626589@[::]:30315"
+
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp CORE_PEER_ADDRESS=peer0.org1.example.com:7051 CORE_PEER_LOCALMSPID="org1MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/org1MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem

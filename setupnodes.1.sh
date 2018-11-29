@@ -5,7 +5,7 @@ port=3031
 rpcport=850
 #bootnode=enode://32e2bfdfba1b2150837f25900b54fd040865bb34177f9566c885602a50a5ce14c9c66e959e7737aa97cda21c84767af28c3a472b22868cbd2e47b9c10d274944@127.0.0.1:30310
 networkId=7895
-genesis=genesispoa10s_10M.json
+genesis=genesispoa9s_10M.json
 array=($(ls keystore))
 
 #gnome-terminal --tab -- sh -c 'bootnode -nodekey boot.key -verbosity 9 -addr :30310; $SHELL'
@@ -108,18 +108,15 @@ geth --datadir $dataDir$i attach --exec 'web3.miner.start()'
 sleep 1
 fi
 done
-
+echo "5 node are running in different tabs."
 
 sleep 12
-
+#deploying smart contract using truffle
 cd truffle 
 truffle migrate
 
-
-
-
-
-
-
-echo "5 node are running in different tabs."
-
+#firing transaction
+sleep 5
+cd ..
+echo $1
+node app.js $1

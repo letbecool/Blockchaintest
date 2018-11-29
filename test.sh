@@ -1,84 +1,22 @@
 #!/bin/bash
-dataDir=nodes/node
-
-for i in {1..5}
+apple=(13.229.197.233 54.255.189.116 3.0.181.135 18.191.228.254 13.59.132.166)
+array=($(ls keystore))
+cd $HOME
+for i in {0..4}
 do
-   echo "Welcome $dataDir$i times"
-   if [ $i == 1 ]
-   then 
-   echo "welcome to 1"
-   fi
+
+if [ $i == 0 ] || [ $i == 1 ] || [ $i == 2 ]
+then
+#gnome-terminal --tab -- sh -c 'ssh -i cobuna_key.pem ubuntu@'${apple[$i]}'; $SHELL'
+#sleep 2
+scp -i cobuna_key.pem /home/bikeshrestha/awesomeProject/Blockchaintest/keystore/${array[$i]} ubuntu@${apple[$i]}:~/.cobuna/keystore
+sleep 1
+else
+scp -i titanaws.pem /home/bikeshrestha/awesomeProject/Blockchaintest/keystore/${array[$i]} ubuntu@${apple[$i]}:~/.cobuna/keystore
+fi
+#gnome-terminal --tab -- sh -c 'ssh -i titanaws.pem ubuntu@'${apple[$i]}'; $SHELL'
 
 done
-array=(one two three)
-echo ${array[1]}
-
-hello=($(ls keystore))
-
-echo ${hello[2]}
-
-file=($(cat keystore/${hello[1]}))
-
-
-
-IFS=$'\r\n' GLOBIGNORE='*' command eval  'enodes=($(cat enode.txt))'
-echo "copying to nodes"
-echo ${enodes[0]}
-
-
-echo "success"
-
-
-
-function static-file() {
-    if [ $# == 2 ]
-    then 
-    echo "[" > $1
-    echo ${enodes[$2]} >> $1
-    echo "]" >> $1
-    elif [ $# == 3 ]
-    then
-    echo "[" > $1
-    echo -n ${enodes[$2]} >> $1
-    echo "," >> $1
-    echo ${enodes[$3]} >> $1  
-    echo "]" >> $1
-    elif [ $# == 4 ] 
-    then 
-    echo "[" > $1
-    echo -n ${enodes[$2]} >> $1
-    echo "," >> $1
-    echo -n ${enodes[$3]} >> $1    
-    echo "," >> $1
-    echo ${enodes[$4]} >> $1
-    echo "]" >> $1
-    else
-    echo "something went wrong"
-    fi   
-}
-
-
-dataDir=nodes/node
-
-echo $dataDir"1"
-echo $dataDir"2"
-echo $dataDir"3"
-echo $dataDir"4"
-echo $dataDir"5"
-
-
-#printing date 
-static-file nodes/node2/static-nodes.json 4
-i=1
-echo $i$(date)
-
-#checking if directory exit and assiging to variable
-b=$(ls nodese)
-if [ $b == null ]
-then
-echo "nullllll"
-fi
-
 
 
 
