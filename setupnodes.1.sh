@@ -1,11 +1,22 @@
 #!/bin/bash
 
+# ./setupnodes.1.sh arg1 arg2
+# arg1=genesisfieNameOnly which is in genesis folder
+# arg2 is tps to file
+
 dataDir=nodes/node
 port=3031
 rpcport=850
 #bootnode=enode://32e2bfdfba1b2150837f25900b54fd040865bb34177f9566c885602a50a5ce14c9c66e959e7737aa97cda21c84767af28c3a472b22868cbd2e47b9c10d274944@127.0.0.1:30310
 networkId=7895
-genesis=genesispoa9s_10M.json
+
+#this will take an argument to set up network
+if [ -z $1 ]
+then
+genesis=genesis/genesispoa6s_15M.json
+else
+genesis=genesis/$1
+fi
 array=($(ls keystore))
 
 #gnome-terminal --tab -- sh -c 'bootnode -nodekey boot.key -verbosity 9 -addr :30310; $SHELL'
@@ -93,7 +104,8 @@ do
    #running nodes
    #rm -rf $dataDir$i/geth/chaindata $dataDir$i/geth/transactions.rlp
    gnome-terminal  --tab  -- sh -c 'geth --datadir '$dataDir$i' --syncmode 'full' --port '$port$i' --rpc --rpcaddr 'localhost' --rpcport '$rpcport$i' --rpcapi 'personal,db,eth,net,web3,txpool,miner' --networkid '$networkId' --unlock '0x$address' --password 'password.txt' 2> 'outputs/$i$(date)'; $SHELL'
-
+   #gnome-terminal  --tab  -- sh -c 'geth --datadir '$dataDir$i' --syncmode 'full' --port '$port$i' --ws --wsaddr '0.0.0.0' --wsorigins '*' --wsport '$rpcport$i' --wsapi 'personal,db,eth,net,web3,txpool,miner' --networkid '$networkId' --unlock '0x$address' --password 'password.txt' 2> 'outputs/$i$(date)'; $SHELL'
+   sleep 2 
    echo "Node $i is running in different tab successfully."    
 done
 
@@ -115,8 +127,12 @@ sleep 12
 cd truffle 
 truffle migrate
 
+
+if [ ! -z $2 ]
+then
 #firing transaction
 sleep 5
 cd ..
-echo $1
-node app.js $1
+echo $2
+node app.1.js $2
+fi

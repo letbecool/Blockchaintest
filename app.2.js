@@ -13,7 +13,7 @@ const args = process.argv.slice(2)
 // for counting empty block to exit
 count=0
 counttx=0
-NOOFTX=10000
+NOOFTX=20000
 
 
 /*
@@ -175,6 +175,7 @@ web3.eth.extend({
 //var b = 0;
 
 // subscribe to event when new block is created
+
 web3.eth.subscribe('newBlockHeaders', (error, block) => {
         if(!error) {
     web3.eth.getBlock(block.number).then(function(value){
@@ -198,9 +199,14 @@ web3.eth.subscribe('newBlockHeaders', (error, block) => {
 });
 
 
+
 // pending transaction every 1 second
 
-setInterval(function(){
+setInterval(pendingTxEverySecond,1000);
+
+
+// pending transaction every second and logs to output
+var pendingTxEverySecond = function() {
 	web3.eth.getBlockNumber().then(function(block){
 		web3.eth.getBlock(block).then(function(value){
 			web3.eth.txpool.status().then(function(result){
@@ -208,8 +214,7 @@ setInterval(function(){
 		})
 	})
 	})
-	
-},1000)
+}
 
 /*
 // for certain time 
@@ -274,8 +279,6 @@ var x=setInterval(doStuff1,1000/tps,time);
 
 //sending certainer number of transction suppose say 120000
 var doStuff1 = function () {
-
-
 	if(counttx<NOOFTX) {
 		let iid = utils.genRandomStr(8)
 		let plid = utils.genRandomStr(8)
@@ -297,7 +300,7 @@ var doStuff1 = function () {
 		i++
 	}else{
 		clearInterval(x)
-	console.log("Completed.......Completed........Completed")
+		console.log("Completed.......Completed........Completed")
 		web3.eth.subscribe('newBlockHeaders', (error, block) => {
 			if(!error) {
 		web3.eth.getBlock(block.number).then(function(value){
