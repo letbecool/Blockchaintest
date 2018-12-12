@@ -4,7 +4,7 @@ fs = require('fs')
 
 // set the provider you want from Web3.providers
 var net = require('net')
-var web3 = new Web3('/home/bikeshrestha/awesomeProject/Blockchaintest/nodes/node2/geth.ipc', net);
+var web3 = new Web3('.cobuna/geth.ipc', net);
 
 
 console.log("connected to local network")
@@ -13,36 +13,9 @@ const args = process.argv.slice(2)
 
 
 
-/*
-fs.writeFile(`${__dirname}/outputs/web3input.csv`, '' , err => {
-    if (!err) {
-        console.log('file empty')
-    } else {
-        console.log(err)
-    }
-})
-*/
-/*
-fs.writeFile(`${__dirname}/outputs/web3output.csv`, '' , err => {
-
-    if (!err) {
-
-        console.log('file empty')
-
-    } else {
-
-        console.log(err)
-
-    }
-
-
-})
-
-*/
-
 let i = 0;
 let j = 0;
-web3.eth.defaultAccount = web3.eth.accounts[0]
+account = web3.eth.defaultAccount = web3.eth.accounts[0]
 //web3.eth.personal.unlockAccount(web3.eth.defaultAccount,"testing",0)
 
 const abi = [
