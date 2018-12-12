@@ -1,10 +1,15 @@
 #!/bin/bash
 # must pass ip as a argument
 #GENESIS=genesispoa8miner.json
-GENESIS=genesispoa4miner.json
-#GENESIS=genesispoa1miner.json
-NOOFMINER=4
-BRANCH=benchmarking
+#GENESIS=genesispoa4miner.json
+GENESIS=genesispoa1miner.json
+NOOFMINER=1
+# working on branch to update code
+BRANCH=benchmarkblock
+# 1 for all peered codition
+# 2 for other configuration network
+NETWORKCONF=2
+
 
 # killing node process and copying result
 if [ -z $1 ]
@@ -23,7 +28,8 @@ then
 ./awscopynodekey.1.sh # copy nodekey
 ./awscopykeystore.sh # copy keystore
 ./awsCREATEpwfile.sh # create file
-./awscopystaticnodsjson.sh # copystatic
+# if argument is passed for other network configuration then all peered
+./awscopystaticnodsjson.sh $NETWORKCONF # copystatic
 #./awskillgethprocess.sh
 ./awsgethscriptcopy.sh # copy script to run node
 ./awsRUNnode.sh # depends on ./awsgethscriptcopy.sh
@@ -55,7 +61,7 @@ sleep 15
 elif [ $1 = 4 ]
 then
 ./awsupdatecode.sh $BRANCH
-./aws 2
+./aws.sh 2
 
 
 else

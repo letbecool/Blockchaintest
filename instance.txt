@@ -1,1 +1,1 @@
-{"status": "SUCCESS", "instanceId": "i-07172c80a340086ea", "region": "ap-southeast-1", "publicIp": "13.229.129.196"}
+{"status": "SUCCESS", "instanceId": "i-0e7a869685267e4c2", "region": "ap-southeast-1", "publicIp": "3.0.50.34"}
