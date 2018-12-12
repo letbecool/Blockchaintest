@@ -4,7 +4,7 @@ fs = require('fs')
 
 // set the provider you want from Web3.providers
 var net = require('net')
-var web3 = new Web3('.cobuna/geth.ipc', net);
+var web3 = new Web3('../.cobuna/geth.ipc', net);
 //var web3 = new Web3("ws://localhost:8502")
 
 console.log("connected to local network")
