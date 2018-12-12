@@ -8,7 +8,7 @@ NOOFMINER=1
 BRANCH=benchmarkblock
 # 1 for all peered codition
 # 2 for other configuration network
-NETWORKCONF=2
+NETWORKCONF=2 # please change as requirement in awsenodestaticjson.sh
 
 
 # killing node process and copying result
@@ -22,8 +22,10 @@ elif [ $1 == 1 ]
 then
 # two command generate static-nodes.json file for all peered
 ./awsenodelistgenerate.sh
-./awsenodestaticjson.sh
+./awsenodestaticjson.sh $NETWORKCONF
+
 ./awscopygenesis.sh $GENESIS # copy genesis two argument genesis file and 
+./awsdeletenodedir.sh
 ./awsINITnode.sh  $GENESIS # init
 ./awscopynodekey.1.sh # copy nodekey
 ./awscopykeystore.sh # copy keystore

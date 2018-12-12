@@ -15,6 +15,7 @@ echo "Success$i"
 done
 
 elif [ $1 == 2 ]
+then
 i=0
 while [ $i -lt ${#apple[@]} ]
 do
