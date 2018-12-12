@@ -14,7 +14,7 @@
 
 var fs = require('fs')
 
-var array = fs.readFileSync(__dirname+'/ip.txt').toString().split("\n");
+var array = fs.readFileSync(__dirname+'/../ip.txt').toString().split("\n");
 console.log(array[0])
 
 module.exports = {  

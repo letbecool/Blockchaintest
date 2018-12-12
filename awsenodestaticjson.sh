@@ -72,9 +72,9 @@ fi
 
 
 
-static-file $DATADIR"0"/$FILE 1
-static-file $DATADIR"1"/$FILE 0
-#static-file $DATADIR"2"/$FILE 1 3
+static-file $DATADIR"0"/$FILE 2
+static-file $DATADIR"1"/$FILE 0 1
+static-file $DATADIR"2"/$FILE 2
 #static-file $DATADIR"3"/$FILE 2 4
 #static-file $DATADIR"4"/$FILE 3
 

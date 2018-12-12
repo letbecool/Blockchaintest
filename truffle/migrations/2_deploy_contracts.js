@@ -7,6 +7,6 @@ module.exports = function(deployer) {
   deployer.deploy(TestGenerator)
   .then(()=> fs.writeFile('contractaddress.txt',TestGenerator.address, function(err,data){
     if (err) console.log(err);
-    console.log("Successfully. contract address is: " + TestGenerator.address);
+    console.log("Successfully written in contractaddress.txt contract address is: " + TestGenerator.address);
   }))
 };

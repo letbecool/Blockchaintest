@@ -38,6 +38,16 @@ then
 sleep 15
 ./awsMine.sh $NOOFMINER # argument is number of miner
 
+# for transaction
+
+cd truffle
+truffle migrate
+cd ..
+
+./awsfortx.sh
+./awsfortxhit.sh 
+
+
 # new node service in already existing
 elif [ $1 == 2 ]
 then
@@ -51,6 +61,16 @@ then
 sleep 15
 ./awsMine.sh $NOOFMINER # argument is number of miner
 
+
+
+# for transaction
+cd truffle
+truffle migrate
+cd ..
+./awsfortx.sh
+./awsfortxhit.sh 
+
+
 # restart node service
 elif [ $1 == 3 ]
 then
@@ -59,6 +79,13 @@ then
 ./awsRUNnode.sh
 sleep 15
 ./awsMine.sh $NOOFMINER
+
+# for transaction
+cd truffle
+truffle migrate
+cd ..
+./awsfortx.sh
+./awsfortxhit.sh 
 
 elif [ $1 = 4 ]
 then
