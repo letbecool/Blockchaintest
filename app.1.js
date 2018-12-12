@@ -13,7 +13,7 @@ const args = process.argv.slice(2)
 
 let i = 0;
 let j = 0;
-web3.eth.defaultAccount = web3.eth.accounts[0]
+account = web3.eth.defaultAccount = web3.eth.accounts[0]
 //web3.eth.personal.unlockAccount(web3.eth.defaultAccount,"testing",0)
 
 const abi = [
@@ -80,7 +80,7 @@ var contractAddress, tps;
 if(args[1] != undefined){
 	contractAddress = args[1].toString();
 }else{
- 	contractAddress = '0x0864c263423928ffe47560e1daa3d5fa9490447d';
+ 	contractAddress = account;
 }
 
 if(args[0] != undefined){
