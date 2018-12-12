@@ -39,7 +39,7 @@ do
    ((i++))
 done
 
-sleep 15
+sleep 15/home/ubuntu/
 
 miners=`geth --datadir ${DATADIR}1 attach --exec 'web3.clique.getSigners().length'`
 

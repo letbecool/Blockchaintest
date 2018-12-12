@@ -1,19 +1,16 @@
-'use strict';
-// Web3 = require("web3");
-
-//var net = require('net')
-//var web3 = new Web3('/home/bikeshrestha/awesomeProject/Blockchaintest/nodes/node3/geth.ipc', net);
-
-console.log("/home/bikeshrestha")
-var con = __dirname;
-console.log(__dirname+"/nodes")
-
+var fs = require('fs');
+const homedir = require('os').homedir();
 /*
-web3.eth.filter("pending").watch(
-    function(error,result){
-        if (!error) {
-            console.log(result);
-        }
-    }
-)
-*/
+var array = fs.readFileSync('/home/bikeshrestha/awesomeProject/Blockchaintest/ip.txt').toString().split("\n");
+for(i in array) {
+    console.log(array[i]);
+}*/
+
+
+var contents = fs.readFileSync(homedir+'/awesomeProject/Blockchaintest/truffle/contractaddress.txt', 'utf8');
+console.log(contents);
+var array = fs.readFileSync(homedir+'/awesomeProject/Blockchaintest/ip.txt').toString().split("\n");
+console.log(array[0])
+
+
+console.log(__dirname)

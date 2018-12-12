@@ -3,6 +3,3 @@
 "enode://6350b002029902177ab373100ef029c2dd648aff094336c58d554bd9b3476a9403e6c33ad0695ab04c50e6f9a975981bd28b7529b0ce7f55201286e1f2331570@[::]:30313"
 "enode://8c6940a2cd0a033fd84604eb307ac06cff90e8b93ba764a74af33b41cba0b712f70f5435c005c19af06cdfee80b42866a553109e36baffd641f660a44e1ba5c7@[::]:30314"
 "enode://2fd73db89ec6fa2fa349feb4e7aab1ed21a713bd5133d84871ed248a65094437e6656151551e95b78a69fd0405fd445ef2afe60e89dfac62e2d8678037626589@[::]:30315"
-
-
-CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp CORE_PEER_ADDRESS=peer0.org1.example.com:7051 CORE_PEER_LOCALMSPID="org1MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/org1MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem

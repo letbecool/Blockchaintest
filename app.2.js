@@ -3,45 +3,10 @@ utils = require('./utils')
 fs = require('fs')
 
 // set the provider you want from Web3.providers
-var net = require('net')
-var web3 = new Web3('/home/bikeshrestha/awesomeProject/Blockchaintest/nodes/node2/geth.ipc', net);
-//var web3 = new Web3("ws://localhost:8502")
+web3 = new Web3(new Web3.providers.HttpProvider("http://52.221.241.19:8545"));
 
 console.log("connected to local network")
 
-const args = process.argv.slice(2)
-// for counting empty block to exit
-count=0
-counttx=0
-NOOFTX=20000
-
-
-/*
-fs.writeFile(`${__dirname}/outputs/web3input.csv`, '' , err => {
-    if (!err) {
-        console.log('file empty')
-    } else {
-        console.log(err)
-    }
-})
-*/
-/*
-fs.writeFile(`${__dirname}/outputs/web3output.csv`, '' , err => {
-
-    if (!err) {
-
-        console.log('file empty')
-
-    } else {
-
-        console.log(err)
-
-    }
-
-
-})
-
-*/
 
 let i = 0;
 let j = 0;
@@ -108,21 +73,28 @@ const abi = [
 		"type": "function"
 	}
 ]
-var contractAddress, tps;
-if(args[1] != undefined){
-	contractAddress = args[1].toString();
-}else{
- 	contractAddress = '0x0864c263423928ffe47560e1daa3d5fa9490447d';
-}
 
-if(args[0] != undefined){
-	tps = parseInt(args[0]);
-}else{
-	tps = 10;
-}
 
-const contractInstance = new web3.eth.Contract(abi,contractAddress);
-/*
+const Contract = web3.eth.contract(abi);
+
+const contractInstance = Contract.at("0xfc9c485f0ba3ea7b69beb9fc1c444057cd16114b");
+
+    // fifteen sec blocktime
+    //'contractaddress': '0xcdb019a14c47b9ae50aee0cad95e56cefd73d477'
+
+    // onesec blocktime
+    //'contractaddress': '0x0768906a4990e01a68a8eff1140839922a97dfc5' 
+
+    
+    // twosec blocktime
+   // 'contractaddress': '0x7d6e4bd454bf1c17d2a7dc95dd570df21057fe5f' 
+
+    // tensec blocktime
+   // 'contractaddress': '0x0d0eee0688dc0e75ddce2e6bd8a1034f97b52a0f'
+
+	// fivesec blocktime
+	//0x24f6d603c463339368107b15b251dda2fb397008
+
 contractInstance.LogOfCauidGen().watch((error, result) => {
 
     if (!error) {
@@ -138,192 +110,100 @@ console.log(error)
 
 });
 
-*/
 
 
 
 
-
-
-contractInstance.events.LogOfCauidGen()
-.on('data',function(result){
-	console.log(result)
-	utils.saveInputToCsv(`${result.returnValues.cauid} ,${result.returnValues.uid} ,${utils.getCurentDateTime()}`, d.getDate()+'_'+tps+'output'+'.csv');
-
-})
-.on('error',function(error){
-	console.log(error)
-})
-
-
-var d = new Date();
-
-web3.eth.extend({
-	property: 'txpool',
-	methods: [{
-	  name: 'content',
-	  call: 'txpool_content'
-	},{
-	  name: 'inspect',
-	  call: 'txpool_inspect'
-	},{
-	  name: 'status',
-	  call: 'txpool_status'
-	}]
-  });
- 
-//var b = 0;
-
-// subscribe to event when new block is created
-
-web3.eth.subscribe('newBlockHeaders', (error, block) => {
-        if(!error) {
-    web3.eth.getBlock(block.number).then(function(value){
-	web3.eth.txpool.status().then(function(result){
- 	console.log(result.pending);
-	console.log(value.size)
-	utils.saveInputToCsv(`${value.number}, ${value.timestamp} ,${value.gasUsed},${value.size},${value.transactions.length}, ${parseInt(result.pending)} , ${value.difficulty}, ${value.totalDifficulty}`, d.getDate()+'_'+tps+'.csv');
-	/*
-	if(b==20){
-		process.exit(1)
-	}
-	b++
-	*/
-	
-})
-}).catch(console.error)
-
-        } else {
-            console.log('Error:', error);          
-        }
-});
-
-
-
-// pending transaction every 1 second
-
-setInterval(pendingTxEverySecond,1000);
-
-
-// pending transaction every second and logs to output
-var pendingTxEverySecond = function() {
-	web3.eth.getBlockNumber().then(function(block){
-		web3.eth.getBlock(block).then(function(value){
-			web3.eth.txpool.status().then(function(result){
-			utils.saveInputToCsv(`${value.number}, ${value.timestamp} ,${value.gasUsed},${value.size},${value.transactions.length}, ${parseInt(result.pending)} , ${value.difficulty}, ${value.totalDifficulty},${parseInt(result.queued)}`, d.getDate()+'_'+'every1sec'+tps+'.csv');
-		})
-	})
-	})
-}
-
-/*
-// for certain time 
 var doStuff1 = function (d2) {
-
+console.log(d2 - Date.now());
 
 if(Date.now()<d2) {
     let iid = utils.genRandomStr(8)
     let plid = utils.genRandomStr(8)
     let uid = i
+
+
     //contractInstance.getID(i, iid, plid,{gas:32000})
-	contractInstance.methods
-	.getID(i, iid, plid)
-	.send({
-		from: '0x142612093efca0f055d10476493ca9a63b6e436c',
-		gas: 50000,
-		gasPrice: 100000000000
-	},function (error, value) {
-		if(!error){
-			utils.saveInputToCsv(`${i} ,${plid} ,${iid} ,${utils.getCurentDateTime()}`, d.getDate()+'_'+'web3input'+'_'+tps+'.csv');
-		} 
-	}).catch(console.log)
+
+    contractInstance.getID(i, iid, plid, {gasPrice: "20000000000", gas: 32000}, function (error, value) {
+        utils.saveInputToCsv(`${i} ,${plid} ,${iid} ,${utils.getCurentDateTime()}`, 'web3input.csv');
+
+
+    })
     console.log(i)
 
     i++
 }else{
     clearInterval(x)
 console.log("Completed.......Completed........Completed")
-	web3.eth.subscribe('newBlockHeaders', (error, block) => {
-		if(!error) {
-	web3.eth.getBlock(block.number).then(function(value){
-	web3.eth.txpool.status().then(function(result){
-	pending=parseInt(result.pending);
-	
-	if(pending==0 || count == 10){
-		process.exit(1)
-	}	
 
-	tx=value.transactions.length
-	if(tx==0){
-		count++
-	}
-	
-	})
-	}).catch(console.error)
-	
-		} else {
-			console.log('Error:', error);          
-		}
-	});
-	
-}};
-var d1 = new Date ();
-var d2 = new Date ( d1 );
-var time= d2.setMinutes(d1.getMinutes() + 3);
+}
 
 
-console.log(time)
-var x=setInterval(doStuff1,1000/tps,time);
+};
+
+
+
+/*
+
+var doStuff1 = function (a) {
+
+		console.log("checking"+a)
+
+
+};
+
+
+
 */
 
 
-//sending certainer number of transction suppose say 120000
-var doStuff1 = function () {
-	if(counttx<NOOFTX) {
-		let iid = utils.genRandomStr(8)
-		let plid = utils.genRandomStr(8)
-		let uid = i
-		//contractInstance.getID(i, iid, plid,{gas:32000})
-		contractInstance.methods
-		.getID(i, iid, plid)
-		.send({
-			from: '0x142612093efca0f055d10476493ca9a63b6e436c',
-			gas: 50000,
-			gasPrice: 100000000000
-		},function (error, value) {
-			if(!error){
-				utils.saveInputToCsv(`${i} ,${plid} ,${iid} ,${utils.getCurentDateTime()}`, d.getDate()+'_'+'web3input'+'_'+tps+'.csv');
-			} 
-		}).catch(console.log)
-		console.log(i)
-		counttx++
-		i++
-	}else{
-		clearInterval(x)
-		console.log("Completed.......Completed........Completed")
-		web3.eth.subscribe('newBlockHeaders', (error, block) => {
-			if(!error) {
-		web3.eth.getBlock(block.number).then(function(value){
-		web3.eth.txpool.status().then(function(result){
-		pending=parseInt(result.pending);
-		
-		if(pending==0 || count == 10){
-			process.exit(1)
-		}	
-	
-		tx=value.transactions.length
-		if(tx==0){
-			count++
-		}
-		
-		})
-		}).catch(console.error)
-		
-			} else {
-				console.log('Error:', error);          
-			}
-		});
-		
-	}};
 
-	var x=setInterval(doStuff1,1000/tps);
+var d1 = new Date ();
+var d2 = new Date ( d1 );
+var time= d2.setMinutes(d1.getMinutes() + 10);
+
+
+console.log(time)
+/*console.log(d1)
+console.log(d2)
+console.log(new Date())
+console.log( new Date() <d2 )*/
+
+//doStuff1(d2)
+
+var x=setInterval(doStuff1,50,time);
+
+
+// setInterval(doStuff1,100)
+/*for(var k = 0; k < 5000;k++){
+    let iid = utils.genRandomStr(8)
+    let plid = utils.genRandomStr(8)
+    let uid = i
+
+
+    //contractInstance.getID(i, iid, plid,{gas:32000})
+
+
+    contractInstance.getID(i, iid, plid,{gas:32000},function (error, value){
+        utils.saveInputToCsv(`${iid} ,${plid} ,${uid} ,${utils.getCurentDateTime()}`, 'web3input.csv');
+    })
+
+    i++
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

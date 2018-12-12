@@ -12,12 +12,17 @@
  *   },
  */
 
-module.exports = {
+var fs = require('fs')
+
+var array = fs.readFileSync(__dirname+'/ip.txt').toString().split("\n");
+console.log(array[0])
+
+module.exports = {  
   networks: {
     development: {
-      host: 'localhost',
-      port: 8502,
-      network_id: "*",
+      host: array[0],
+      port: 8545,
+      network_id: "7895",
       gas: 1000000,
       gasPrice: 100000000000
     }

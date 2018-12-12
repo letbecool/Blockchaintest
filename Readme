@@ -11,8 +11,11 @@ sudo apt install sleuthkit
 
 sudo apt install jq (for parsing json object in bash)
 
+// kill all process runing geth
+ps -ef | grep geth | grep -v grep | awk '{print $2}' | xargs kill -9
 
-
+// know which subfolder takes how much space
+du -h --max-depth=1 | sort -hr
 
 Setup geth and bootnode.
 
@@ -46,6 +49,27 @@ deploy contract
 changes contract address in app and time 
 run node app.js 
 
+// this line generate enodeid from nodekey
+bootnode -nodekeyhex 59233b25bfa4c214a8713e07a395a5d11478de10f36c6c80ba5369541f73bc44 -writeaddress
+
+// run commmand in background and save the process id in file to kill later
+nohup my_command > my.log 2>&1 & echo $! > save_pid.txt
+
+// kill process
+kill -9 `cat save_pid.txt`
+rm save_pid.txt
+
+// curl http request create ec2instance in sigapor region aws
+curl --header "Content-Type: application/json" --request POST --data '{"nodeName":"Apple"}' https://an73tfmbmh.execute-api.ap-southeast-1.amazonaws.com/bikesh/bikesh > instance.json
+cat instance.json | j1 '.publicIp' 
+
+// connect to remote aws ec2 instance and run geth
+ssh -i cobuna_key.pem ubuntu@$52.74.122.251 'nohup geth --nodiscover --syncmode "full" --cache 512 --rpc --rpcaddr 0.0.0.0 --rpcapi 'web3, eth' --rpccorsdomain "*" --password "testing" > my.log 2>&1 & echo $! > save_pid.txt'
+
+
+
+
+
 
 0x 78b25d90d0c6b2c6da588ab8621d32c93ab7510c
 0x 142612093efca0f055d10476493ca9a63b6e436c
@@ -69,3 +93,57 @@ run node app.js
 # geth pid and kill 
 
 ps -ef | grep geth | grep -v grep | awk '{print $2}' | xargs kill -9
+
+
+
+geth --nodiscover --syncmode "full" --cache 512 --rpc --rpcaddr 0.0.0.0 --rpcapi 'web3, eth' --rpccorsdomain "*" --networkid 7895 --unlock "0x78b25d90d0c6b2c6da588ab8621d32c93ab7510c" --password "testing"
+geth --nodiscover --syncmode "full" --cache 512 --rpc --rpcaddr 0.0.0.0 --rpcapi 'web3, eth' --rpccorsdomain "*" --networkid 7895 --unlock "0x142612093efca0f055d10476493ca9a63b6e436c" --password "testing" console
+geth --nodiscover --syncmode "full" --cache 512 --rpc --rpcaddr 0.0.0.0 --rpcapi 'web3, eth' --rpccorsdomain "*" --networkid 7895 --unlock "0x2e4414a44c0e24c06190c0136390bd541fc34b5a" --password "testing" console
+geth --nodiscover --syncmode "full" --cache 512 --rpc --rpcaddr 0.0.0.0 --rpcapi 'web3, eth' --rpccorsdomain "*" --networkid 7895 --unlock "0xe9b80b78d7bfc194dbe6b4db0c0f1d53e9838da0" --password "testing" console
+geth --nodiscover --syncmode "full" --cache 512 --rpc --rpcaddr 0.0.0.0 --rpcapi 'web3, eth' --rpccorsdomain "*" --networkid 7895 --unlock "0xd34d4b8ccf12f6f0766fa896dbfc4d838532e908" --password "testing" console
+
+geth --syncmode "full" --rpc --rpcaddr 0.0.0.0 --rpcapi 'web3' --rpccorsdomain "*" --networkid 7895 console
+
+geth --datadir '$dataDir' --syncmode 'full' --port '$port' --rpc --rpcaddr 'localhost' --rpcport '$rpcport$i' --rpcapi 'personal,db,eth,net,web3,txpool,miner' --networkid '$networkId' --unlock '0x$address' --password 'password.txt' 2> 'outputs/$i$(date)
+
+geth --nodiscover --syncmode "full" --cache 512 --rpc --rpcaddr 0.0.0.0 --rpcapi 'web3, eth' --rpccorsdomain "*" --networkid 7895 --unlock "0x78b25d90d0c6b2c6da588ab8621d32c93ab7510c" --password "testing" 2> ".cobuna/console.log"
+geth --nodiscover --syncmode "full" --cache 512 --rpc --rpcaddr 0.0.0.0 --rpcapi 'web3, eth' --rpccorsdomain "*" --networkid 7895 --unlock "0x142612093efca0f055d10476493ca9a63b6e436c" --password "testing" 2> ".cobuna/console.log"
+
+
+geth attach ipc:.cobuna/geth.ipc
+
+
+
+[
+"enode://59c096e805e48578f953505ded434a913e823d30438a6d2b1a111895f6a69e0c8d75cb351ffc85d83278e8b4eba195a8ec0e26ea2832fe96c0be24c4aa1acc33@52.221.241.19:30303",
+"enode://808d3ffd23e7b4ab67e1eace822d145a04a9015df3c260b8ad5ec6da08aea6779f03ad531e6604e53605f209985b4c16c5aec95aa99290e3dc17c118f2f47aec@3.0.96.68:30303",
+"enode://6350b002029902177ab373100ef029c2dd648aff094336c58d554bd9b3476a9403e6c33ad0695ab04c50e6f9a975981bd28b7529b0ce7f55201286e1f2331570@52.221.179.45:30303",
+"enode://8c6940a2cd0a033fd84604eb307ac06cff90e8b93ba764a74af33b41cba0b712f70f5435c005c19af06cdfee80b42866a553109e36baffd641f660a44e1ba5c7@54.179.181.6:30303",
+"enode://2fd73db89ec6fa2fa349feb4e7aab1ed21a713bd5133d84871ed248a65094437e6656151551e95b78a69fd0405fd445ef2afe60e89dfac62e2d8678037626589@54.255.140.207:30303",
+"enode://cd74c98435a5168916bffbf218062b88403135638744811c30f3bdc1d544883ca45a427d4a3c3bbcbbf6682a38dec9942d95d1f4bf4cd5b8cb9b1e18851cdfbe@52.221.182.77:30303",
+"enode://59066eee2fefa88c467006737e2caba470414b3dfe8397f0b14df5d20b0a6b2b84e525d785b55b13a05fd0b4c5b0384b4aac90ff394fa5677873a3b7b4f50243@13.229.65.161:30303",
+"enode://bd5c4175614f0245054206a430db8dfdc3604a2c3eda1886a3c007cd412583a8f0a81b48aaeca53dc1e609176453f3ac57018b3a153f89aeeca1073507db7457@54.255.236.155:30303",
+"enode://040d8e2816b313c60acc9c3086e3b1d20b0a1ffd6996c214a9b267093d6e3579e9cc32542c2c7c6b3b656a5a3ac4076cc38e7e30fbc41a7871ecc6e7b67992ac@54.255.185.183:30303",
+"enode://39619df171415b65dba26607bf567b827bb6f6c7e31030d6032ee24a2dbb951f7c3bfb4d841932277503ad1cbc2d13234bddec566295fe60e8c963a5b0dc658f@52.221.226.127:30303"
+]
+
+52.221.241.19
+3.0.96.68
+52.221.179.45
+
+
+
+[
+"enode://59c096e805e48578f953505ded434a913e823d30438a6d2b1a111895f6a69e0c8d75cb351ffc85d83278e8b4eba195a8ec0e26ea2832fe96c0be24c4aa1acc33@18.217.151.59:30303",
+"enode://808d3ffd23e7b4ab67e1eace822d145a04a9015df3c260b8ad5ec6da08aea6779f03ad531e6604e53605f209985b4c16c5aec95aa99290e3dc17c118f2f47aec@18.191.119.245:30303",
+"enode://6350b002029902177ab373100ef029c2dd648aff094336c58d554bd9b3476a9403e6c33ad0695ab04c50e6f9a975981bd28b7529b0ce7f55201286e1f2331570@18.191.206.206:30303"
+]
+
+genesis1miner.json
+
+
+singapur
+node2
+
+ohio
+node 4 

@@ -1,0 +1,1 @@
+{"status": "SUCCESS", "instanceId": "i-04f24e3a409428ea8", "region": "ap-southeast-1", "publicIp": "13.229.134.253"}
