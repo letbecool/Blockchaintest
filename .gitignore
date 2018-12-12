@@ -3,3 +3,6 @@
 /outputs
 package-lock.json
 .node-xmlhttprequest**
+instance.txt
+instnceid.txt
+publicip.txt
