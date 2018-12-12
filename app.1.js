@@ -14,7 +14,7 @@ const args = process.argv.slice(2)
 let i = 0;
 let j = 0;
 web3.eth.defaultAccount = web3.eth.accounts[0]
-console.log(account)
+
 //web3.eth.personal.unlockAccount(web3.eth.defaultAccount,"testing",0)
 
 const abi = [
