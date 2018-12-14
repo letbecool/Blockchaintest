@@ -1,9 +1,21 @@
 #!/bin/bash
 
 # create instance in singapur
-NUMBER=$1
+NUMBER=$2
+REG=$1
+
+if [ $1 == 1 ]
+then
 REGION=bikesh # singapor region
-#REGION=bikesh/stha # ohio region
+
+elif [ $1 == 2 ]
+then
+REGION=bikesh/stha # ohio region
+
+else
+echo "1 for singapur & 2 for ohio"
+fi
+
 
 if [ ! -f publicip.txt ] 
 then
@@ -16,14 +28,14 @@ touch instanceid.txt
 fi
 
 
-if [ ! -z $1 ]
+if [ ! -z $2 ]
 then
 # for different ip addresss
 
 echo "" >> publicip.txt
 echo "" >> instanceid.txt
-echo "singapor" >> publicip.txt
-echo "singapor" >> instanceid.txt
+echo "$REGION" >> publicip.txt
+echo "$REGION" >> instanceid.txt
 
 i=0
 while [ $i -lt $NUMBER ]

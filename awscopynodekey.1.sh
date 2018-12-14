@@ -1,7 +1,12 @@
 #!/bin/bash
 
 
+if [ -z $1 ]
+then
 apple=($(cat ip.txt))
+else
+apple=($(cat $1))
+fi
 node=($(cat nodekey.txt))
 cd $HOME
 i=0

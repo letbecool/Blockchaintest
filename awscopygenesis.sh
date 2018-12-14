@@ -1,7 +1,12 @@
 #!/bin/bash
 
 
+if [ -z $2 ]
+then
 apple=($(cat ip.txt))
+else
+apple=($(cat $2))
+fi
 cd $HOME
 i=0
 while [ $i -lt ${#apple[@]} ]

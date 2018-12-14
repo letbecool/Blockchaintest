@@ -2,7 +2,12 @@
 # accept 1 argument number of miner
 
 
+if [ -z $2 ]
+then
 apple=($(cat ip.txt))
+else
+apple=($(cat $2))
+fi
 cd $HOME
 
 miner=$1

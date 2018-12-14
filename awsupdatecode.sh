@@ -9,7 +9,12 @@
 
 #nohup sleep 30; touch nohup-exit
 
+if [ -z $2 ]
+then
 apple=($(cat ip.txt))
+else
+apple=($(cat $2))
+fi
 
 BRANCH=$1
 cd $HOME

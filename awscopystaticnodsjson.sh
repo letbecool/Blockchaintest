@@ -1,6 +1,11 @@
 #!/bin/bash
 
+if [ -z $2 ]
+then
 apple=($(cat ip.txt))
+else
+apple=($(cat $2))
+fi
 DATADIR=nodes/node
 cd $HOME
 if [ $1 == 1 ]
@@ -9,7 +14,7 @@ i=0
 while [ $i -lt ${#apple[@]} ]
 do
 #scp -i cobuna_key.pem /home/bikeshrestha/awesomeProject/Blockchaintest/nodes/node$((i+1))/static-nodes.json ubuntu@${apple[$i]}:~/.cobuna/geth
-scp -i cobuna_key.pem /home/bikeshrestha/awesomeProject/Blockchaintest/static-nodes.json ubuntu@${apple[$i]}:~/.cobuna/geth
+scp -i cobuna_key.pem /home/bikeshrestha/awesomeProject/Blockchaintest/static-nodes$2 ubuntu@${apple[$i]}:~/.cobuna/geth/static-nodes.json
 echo "Success$i"
 ((i++))
 done
@@ -31,7 +36,7 @@ echo "please pass argument for all peered and 2 for different network configurat
 fi
 
 
-echo "**********COPY STATIC-NODES.JSON $1***************"
+echo "**********COPY STATIC-NODES.JSON***************"
 
 
 

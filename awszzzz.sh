@@ -9,10 +9,13 @@
 
 #nohup sleep 30; touch nohup-exit
 
-
-array=($(ls keystore))
+if [ -z $1 ]
+then
 apple=($(cat ip.txt))
-
+else
+apple=($(cat $1))
+fi
+array=($(ls keystore))
 BRANCH=blocksim
 cd $HOME
 i=0

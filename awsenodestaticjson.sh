@@ -3,10 +3,15 @@
 
 #gnome-terminal --tab -- sh -c 'node '$HOME'/poatest/test/aapp.js '${apple[$i]}
 
-
-enode=($(cat enodeawslist.txt))
+if [ -z $2 ]
+then
 apple=($(cat ip.txt))
-FILE=static-nodes.json
+else
+apple=($(cat $2))
+fi
+
+enode=($(cat enodeawslist$2))
+FILE=static-nodes # static-nodes$2.json
 appleno=${#apple[@]}
 DATADIR=nodes/node
 ((appleno--))
@@ -14,17 +19,17 @@ DATADIR=nodes/node
 
 if [ $1 == 1 ]
 then
-echo "[" > $FILE
+echo "[" > $FILE$2
 i=0
 while [ $i -lt ${#apple[@]} ]
 do
 if [ $i != $appleno ]
 then
-echo -n ${enode[$i]} >> $FILE
-echo "," >> $FILE
+echo -n ${enode[$i]} >> $FILE$2
+echo "," >> $FILE$2
 else
-echo ${enode[$i]} >> $FILE
-echo "]" >> $FILE
+echo ${enode[$i]} >> $FILE$2
+echo "]" >> $FILE$2
 fi
 ((i++))
 done
@@ -72,11 +77,11 @@ fi
 
 
 
-static-file $DATADIR"0"/$FILE 2
-static-file $DATADIR"1"/$FILE 0 1
-static-file $DATADIR"2"/$FILE 2
-#static-file $DATADIR"3"/$FILE 2 4
-#static-file $DATADIR"4"/$FILE 3
+static-file $DATADIR"0"/$FILE$2 2 3
+static-file $DATADIR"1"/$FILE$2 3 4
+static-file $DATADIR"2"/$FILE$2 0 4
+static-file $DATADIR"3"/$FILE$2 0 1
+static-file $DATADIR"4"/$FILE$2 1 2
 
 
 else 

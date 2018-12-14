@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo $(($#-1))
-
 echo $1
-echo $2
+b=$1
+echo "${b::-4}"
+

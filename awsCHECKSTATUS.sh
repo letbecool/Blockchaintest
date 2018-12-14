@@ -1,6 +1,12 @@
 #!/bin/bash
 
+
+if [ -z $1 ]
+then
 apple=($(cat ip.txt))
+else
+apple=($(cat $1))
+fi
 cd $HOME
 date
 i=0

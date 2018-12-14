@@ -1,13 +1,19 @@
 #!/bin/bash
 
 
+if [ -z $1 ]
+then
 apple=($(cat ip.txt))
+else
+apple=($(cat $1))
+fi
+DATADIR=/home/ubuntu/.cobuna
 cd $HOME
 i=0
 while [ $i -lt ${#apple[@]} ]
 do
 
-ssh -i cobuna_key.pem ubuntu@${apple[$i]} 'rm -rf /home/ubuntu/.cobuna/geth/chaindata /home/ubuntu/.cobuna/geth/lightchaindata /home/ubuntu/.cobuna/geth/nodes /home/ubuntu/.cobuna/geth/transactions.rlp /home/ubuntu/.cobuna/history /home/ubuntu/.cobuna/geth/LOCK /home/ubuntu/.cobuna/geth.ipc'
+ssh -i cobuna_key.pem ubuntu@${apple[$i]} 'rm -rf $DATADIR/geth/chaindata $DATADIR/geth/lightchaindata $DATADIR/geth/nodes $DATADIR/geth/transactions.rlp $DATADIR/history $DATADIR/geth/LOCK $DATADIR/geth.ipc Blockchaintest/outputs'
 sleep 1
 
 echo "Success$i"

@@ -8,35 +8,37 @@ NOOFMINER=1
 BRANCH=benchmarkblock
 # 1 for all peered codition
 # 2 for other configuration network
-NETWORKCONF=2 # please change as requirement in awsenodestaticjson.sh
-
+NETWORKCONF=1 # please change as requirement in awsenodestaticjson.sh
+#IPDIR=ipsgp3nodes.txt
+IPDIR=ip.txt
 
 # killing node process and copying result
 if [ -z $1 ]
 then
-./awskillgethprocess.sh
-./awsCOPYresult.sh
+./awskillgethprocess.sh $IPDIR
+./awsCOPYresult.sh $IPDIR # after copying kill process
 
 # new setup
 elif [ $1 == 1 ]
 then
 # two command generate static-nodes.json file for all peered
-./awsenodelistgenerate.sh
-./awsenodestaticjson.sh $NETWORKCONF
 
-./awscopygenesis.sh $GENESIS # copy genesis two argument genesis file and 
-./awsdeletenodedir.sh
-./awsINITnode.sh  $GENESIS # init
-./awscopynodekey.1.sh # copy nodekey
-./awscopykeystore.sh # copy keystore
-./awsCREATEpwfile.sh # create file
+./awsenodelistgenerate.sh $IPDIR
+./awsenodestaticjson.sh $NETWORKCONF $IPDIR
+
+./awscopygenesis.sh $GENESIS $IPDIR # copy genesis two argument genesis file and 
+./awsdeletenodedir.sh $IPDIR
+./awsINITnode.sh  $GENESIS $IPDIR # init
+./awscopynodekey.1.sh $IPDIR # copy nodekey
+./awscopykeystore.sh $IPDIR # copy keystore
+./awsCREATEpwfile.sh $IPDIR # create file
 # if argument is passed for other network configuration then all peered
-./awscopystaticnodsjson.sh $NETWORKCONF # copystatic
+./awscopystaticnodsjson.sh $NETWORKCONF $IPDIR # copystatic
 #./awskillgethprocess.sh
-./awsgethscriptcopy.sh # copy script to run node
-./awsRUNnode.sh # depends on ./awsgethscriptcopy.sh
+./awsgethscriptcopy.sh $IPDIR # copy script to run node
+./awsRUNnode.sh $IPDIR # depends on ./awsgethscriptcopy.sh
 sleep 15
-./awsMine.sh $NOOFMINER # argument is number of miner
+./awsMine.sh $NOOFMINER $IPDIR # argument is number of miner
 
 # for transaction
 
@@ -44,38 +46,45 @@ cd truffle
 truffle migrate
 cd ..
 
-./awsfortx.sh
-./awsfortxhit.sh 
+./awsfortx.sh $IPDIR
+./awsfortxhit.sh $IPDIR
 
 
 # new node service in already existing
 elif [ $1 == 2 ]
 then
-./awskillgethprocess.sh
-./awsCOPYresult.sh
+#./awskillgethprocess.sh
+#./awsCOPYresult.sh
+
+#./awsenodelistgenerate.sh
+#./awsenodestaticjson.sh $NETWORKCONF
+
+./awscopygenesis.sh $GENESIS
 ./awsdeletenodeinfo.sh
-./awscopygenesis.sh $GENESIS # copy genesis two argument genesis file and 
 ./awsINITnode.sh  $GENESIS # init
+./awscopystaticnodsjson.sh $NETWORKCONF # copystatic
+sleep 5
 #./awscopystaticnodsjson.sh
 ./awsRUNnode.sh # depends on ./awsgethscriptcopy.sh
-sleep 15
+sleep 10
+#./awsCREATEpwfile.sh # create file
 ./awsMine.sh $NOOFMINER # argument is number of miner
 
-
-
 # for transaction
+# deploy smartcontract
 cd truffle
 truffle migrate
 cd ..
-./awsfortx.sh
+
+# fire transaction
 ./awsfortxhit.sh 
 
 
 # restart node service
 elif [ $1 == 3 ]
 then
-./awskillgethprocess.sh
-./awsCOPYresult.sh
+#./awskillgethprocess.sh
+#./awsCOPYresult.sh
 ./awsRUNnode.sh
 sleep 15
 ./awsMine.sh $NOOFMINER
@@ -84,12 +93,12 @@ sleep 15
 cd truffle
 truffle migrate
 cd ..
-./awsfortx.sh
+
 ./awsfortxhit.sh 
 
 elif [ $1 = 4 ]
 then
-./awsupdatecode.sh $BRANCH
+./awsupdatecode.sh $BRANCH $IPDIR
 ./aws.sh 2
 
 
@@ -98,15 +107,8 @@ else
 echo "Please pass argument as 1 or 2 or 3 or null"
 
 fi
-echo "null  : kill process and copy result"
-echo "1     : initial start node"
-echo "2     : setup other configuration"
-echo "3     : restart node "
-echo "4     : update code and run node"
-echo "**************PROCESS COMPLETE $1****************"
 
 if [ ! -z $1 ]
 then
-while true; do ./awsCHECKSTATUS.sh ; sleep 60; done
+while true; do ./awsCHECKSTATUS.sh $IPDIR; sleep 60; done
 fi
-

@@ -1,6 +1,11 @@
 #!/bin/bash
 
+if [ -z $1 ]
+then
 apple=($(cat ip.txt))
+else
+apple=($(cat $1))
+fi
 array=($(ls keystore))
 cd $HOME
 i=0

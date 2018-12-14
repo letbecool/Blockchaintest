@@ -2,7 +2,12 @@
 
 # only 1 node
 
+if [ -z $1 ]
+then
 apple=($(cat ip.txt))
+else
+apple=($(cat $1))
+fi
 cd $HOME
 NO=${#apple[@]}
 i=0
@@ -15,9 +20,8 @@ do
 ssh -i cobuna_key.pem ubuntu@${apple[$i]} "bash -s" << EOF
     git clone https://github.com/bikeshrestha/Blockchaintest.git
     cd Blockchaintest
-    mkdir outputs
-    git pull
     git checkout awstx
+    git pull
     npm install
 EOF
 
